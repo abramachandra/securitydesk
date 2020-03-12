@@ -4,13 +4,12 @@ package com.codepirates.securitydesk.controller;
 import com.codepirates.securitydesk.model.LateNightConeyanceModel;
 import com.codepirates.securitydesk.repository.EmployeeDAL;
 import com.codepirates.securitydesk.repository.EmployeeRepository;
+import com.codepirates.securitydesk.util.CommonFuntions;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -18,21 +17,28 @@ public class SecurityDeskController {
 
     private final EmployeeRepository employeeRepository;
     private final EmployeeDAL employeeDAL;
+    private final CommonFuntions commonFuntions;
 
-    public SecurityDeskController(EmployeeRepository employeeRepository, EmployeeDAL employeeDAL) {
+    public SecurityDeskController(EmployeeRepository employeeRepository, EmployeeDAL employeeDAL, CommonFuntions commonFuntions) {
         this.employeeRepository = employeeRepository;
         this.employeeDAL = employeeDAL;
+        this.commonFuntions = commonFuntions;
     }
 
     @RequestMapping(value = "/createLNCEntry", method = RequestMethod.POST)
     public LateNightConeyanceModel addNewLNCEntry(@RequestBody LateNightConeyanceModel lateNightConeyanceModel) {
-        lateNightConeyanceModel.setCheckInTime (LocalDate.now ());
+        lateNightConeyanceModel.setCheckInTime(commonFuntions.currentDateAndTime ());
         return employeeDAL.addNewLateNightEntry(lateNightConeyanceModel);
     }
 
     @RequestMapping(value = "/getLNCEntry", method = RequestMethod.GET)
     public List<LateNightConeyanceModel> getLNCEntry() {
-        return employeeDAL.getAllEmployee ();
+        return employeeRepository.findAllByCheckOutTimeIsNotNull ();
     }
 
+    @RequestMapping(value = "/updateLNCEntry/{employeeId}", method = RequestMethod.GET)
+    public List<LateNightConeyanceModel> getLNCEntry(@PathVariable String employeeId) {
+        employeeDAL.updateLateNightEntry (employeeId);
+        return employeeDAL.getAllEmployee ();
+    }
 }

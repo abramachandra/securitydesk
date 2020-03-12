@@ -8,22 +8,22 @@ import java.time.LocalDate;
 @Document
 public class LateNightConeyanceModel extends Employee {
 
-    private LocalDate checkInTime;
-    private LocalDate checkOutTime;
+    private String checkInTime;
+    private String checkOutTime;
 
-    public LocalDate getCheckInTime() {
+    public String getCheckInTime() {
         return checkInTime;
     }
 
-    public void setCheckInTime(LocalDate checkInTime) {
+    public void setCheckInTime(String checkInTime) {
         this.checkInTime = checkInTime;
     }
 
-    public LocalDate getCheckOutTime() {
+    public String getCheckOutTime() {
         return checkOutTime;
     }
 
-    public void setCheckOutTime(LocalDate checkOutTime) {
+    public void setCheckOutTime(String checkOutTime) {
         this.checkOutTime = checkOutTime;
     }
 }
