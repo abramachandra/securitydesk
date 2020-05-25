@@ -13,6 +13,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import LateNightConveyance from "./LateNightConveyance";
 
+// React Notification
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer } from 'react-notifications';
+
 library.add(faSearch)
 
 class Main extends Component {
@@ -100,6 +104,7 @@ class Main extends Component {
                             </section>
                         </div>
                     </section>
+                    <NotificationContainer />
 
                 </div>
             </HashRouter>

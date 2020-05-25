@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import axios from "axios";
 import Form from "./BaggageForm";
 
+// React Notification
+import { NotificationManager } from 'react-notifications';
+
 class Baggage extends Component {
 
     constructor(props){
@@ -32,7 +35,10 @@ class Baggage extends Component {
         axios.post('/baggage', bodyFormData)
             .then(res => {
                 this.setState({baggage: res.data});
-            })
+                NotificationManager.success('Successfully added baggage', 'Successful!', 2000);
+            }).catch(err => {
+            NotificationManager.error(err.message, 'Error!');
+        })
     }
 
     checkoutBaggage(id) {
@@ -40,7 +46,10 @@ class Baggage extends Component {
         axios.put('/baggage/'+id)
             .then(res => {
                 this.setState({baggage: res.data});
-            })
+                NotificationManager.success('Successfully checkout baggage', 'Successful!', 2000);
+            }).catch(err => {
+            NotificationManager.error(err.message, 'Error!');
+        })
     }
 
 
